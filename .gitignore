@@ -1,0 +1,28 @@
+# --- OS / IDE Junk ---
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.log
+
+# --- Frontend (Node/Vite) ---
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# --- Backend (PHP/Composer) ---
+backend/vendor/
+backend/.env
+backend/composer.lock
+# If you have specific PHP error logs
+backend/error_log
+backend/php_errors.log
+
+# --- Docker / Database ---
+# We keep the Dockerfiles and compose.yml, but ignore local data
+.docker/
+db/data/

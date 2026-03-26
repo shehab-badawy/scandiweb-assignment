@@ -1,0 +1,43 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 100px;
+  height: 80px;
+  background: #fff;
+}
+
+.nav-link {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #1D1F22;
+  padding: 28px 16px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-link.active {
+  color: #5ECE7B; 
+  border-bottom: 2px solid #5ECE7B;
+}
+
+.cart-btn {
+  background: none;
+  border: none;
+  position: relative;
+  cursor: pointer;
+}
+
+.cart-count-bubble {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #1D1F22;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

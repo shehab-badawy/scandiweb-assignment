@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: scandi_db
+    environment:
+      MYSQL_DATABASE: scandi_store
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/tables.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build: ./backend
+    container_name: scandi_backend
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_NAME: scandi_store
+      DB_USER: root
+      DB_PASS: root_password
+    depends_on:
+      - db
+
+  frontend:
+      build: ./frontend
+      container_name: scandi_frontend
+      tty: true
+      stdin_open: true
+      ports:
+        - "5173:5173"
+      volumes:
+        - ./frontend:/app
+        - /app/node_modules # Important: This keeps container modules isolated
+      # This force-installs and runs Vite; the tail keeps it from ever exiting
+      command: >
+        sh -c "npm install && (npm run dev -- --host 0.0.0.0 &) && tail -f /dev/null"
+      environment:
+        - VITE_GRAPHQL_URI=http://localhost:8000/graphql
+      depends_on:
+        - backend
