@@ -78,6 +78,6 @@ This deployment follows a professional **Reverse Proxy architecture** designed f
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+git clone https://github.com/shehab-badawy/scandiweb-assignment/tree/main
 cd scandiweb-store
 docker-compose up -d
