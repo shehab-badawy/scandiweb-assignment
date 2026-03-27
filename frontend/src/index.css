@@ -2,11 +2,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 100px;
+  padding: 0 50px; 
   height: 80px;
   background: #fff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; 
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-sizing: border-box; 
 }
 
+
+.logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 50px; /* Ensures the container always has space */
+}
+
+.cart-icon {
+  font-size: 24px; /* Make sure the emoji is big enough to see */
+}
 .nav-link {
   text-transform: uppercase;
   text-decoration: none;

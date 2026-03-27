@@ -75,3 +75,42 @@
   background: #E5E5E5;
   cursor: not-allowed;
 }
+
+.attr-mini-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.mini-attr-btn {
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #1D1F22;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 4px;
+  /* Prevent stretching */
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+/* Selected state */
+.mini-attr-btn.selected {
+  background-color: #1D1F22;
+  color: #FFFFFF;
+}
+
+/* Special handling for Color swatches */
+.mini-attr-btn.swatch {
+  border: 1px solid #E5E5E5;
+}
+
+.mini-attr-btn.swatch.selected {
+  outline: 2px solid #5ECE7B;
+  outline-offset: 1px;
+}

@@ -1,5 +1,4 @@
 import React from 'react';
-// FIX: Using an explicit path to help Vite find the export in Apollo 4
 import { useMutation } from "@apollo/client/react"; 
 import { useCart } from '../context/CartContext';
 import { PLACE_ORDER } from '../graphql/mutations';
@@ -7,7 +6,7 @@ import '../styles/cart-overlay.css';
 import { toKebab } from '../utils/helpers';
 
 const CartOverlay = () => {
-  const { cart, updateQuantity, setIsOverlayOpen, setCart } = useCart();
+  const { cart, updateQuantity, setIsOverlayOpen, clearCart } = useCart();
   const [placeOrder] = useMutation(PLACE_ORDER);
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -24,22 +23,25 @@ const CartOverlay = () => {
     }));
 
     try {
-      await placeOrder({
+      const { data } = await placeOrder({
         variables: {
           total_amount: totalPrice,
           currency_label: cart[0].prices[0].label,
           items: itemsInput
         }
       });
-      setCart([]); // Clear cart after success
-      setIsOverlayOpen(false);
-      alert("Order placed successfully!");
+
+      // If backend returns data, we treat it as success
+      if (data) {
+        alert("Order placed successfully!"); 
+        clearCart(); // Empties cart state and localStorage
+        setIsOverlayOpen(false); // Closes the overlay
+      }
     } catch (err) {
       console.error("Order Error:", err);
+      alert("There was an error placing your order. Please try again.");
     }
   };
-
-  const kebab = (str) => str.toLowerCase().replace(/\s+/g, '-');
 
   return (
     <div data-testid="cart-overlay" className="cart-overlay-wrapper" onClick={() => setIsOverlayOpen(false)}>
@@ -90,7 +92,7 @@ const CartOverlay = () => {
                 <span className="qty-amount" data-testid="cart-item-amount">{item.quantity}</span>
                 <button 
                   className="qty-btn"
-                  data-testid="cart-item-amount-decrease"
+                  data-testid="qty-btn" // Added for testing
                   onClick={() => updateQuantity(item.id, item.selectedAttributes, -1)}
                 >-</button>
               </div>
@@ -109,6 +111,7 @@ const CartOverlay = () => {
 
         <button 
           className="place-order-btn"
+          data-testid="place-order-btn"
           disabled={cart.length === 0}
           onClick={handlePlaceOrder}
         >
